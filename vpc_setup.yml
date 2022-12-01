@@ -92,7 +92,7 @@
           Name: serhieiev-privsub3
       register: privsub3_out
 
-    - name: Create an AWS VPC Internet gateway
+    - name: create an AWS VPC Internet gateway
       ec2_vpc_igw:
         vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
@@ -100,3 +100,18 @@
         resource_tags:
           Name: serhieiev-igw
       register: igw_out
+
+    - name: setup public subnet route table
+      ec2_vpc_route_table:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        tags:
+          Name: serhieiev-pubRT
+        subnets:
+          - "{{privsub1_out.subnet.id}}"
+          - "{{privsub2_out.subnet.id}}"
+          - "{{privsub3_out.subnet.id}}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{igw_out.gateway_id}}"
+      register: pubRT_out
