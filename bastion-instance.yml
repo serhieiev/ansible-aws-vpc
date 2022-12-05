@@ -26,7 +26,7 @@
     - name: create SG for bastion host
       ec2_group:
         name: bastion-host-SG
-        description: Allow port 22 from everywhere and all port within sg
+        description: only allow SSH access from my IP
         region: "{{region}}"
         vpc_id: "{{vpcid}}"
         rules:
