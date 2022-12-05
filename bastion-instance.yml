@@ -5,7 +5,7 @@
   gather_facts: no
   tasks:
     - name: import bastion setup variables
-      include_vars: vars/bastion_setup
+      include_vars: vars/vpc_setup
 
     - name: import VPC setup Variables
       include_vars: vars/output_vars
