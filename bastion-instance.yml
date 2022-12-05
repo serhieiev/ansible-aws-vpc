@@ -45,12 +45,12 @@
         wait: yes
         wait_timeout: 300
         instance_tags:
-          Name: "bastion_host"
+          Name: "bastion-host"
           Project: serhieiev
           Owner: DevOps Team
         exact_count: 1
         count_tag:
-          Name: "bastion_host"
+          Name: "bastion-host"
           Project: serhieiev
           Owner: DevOps Team
         group_id: "{{bastion_SG_out.group_id}}"
