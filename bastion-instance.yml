@@ -7,7 +7,7 @@
     - name: import bastion setup variables
       include_vars: vars/vpc_setup
 
-    - name: import VPC setup Variables
+    - name: import VPC setup variables
       include_vars: vars/output_vars
 
     - name: create serhieiev ec2 key

@@ -1,0 +1,27 @@
+---
+- name: setuo EC2 stack of instances
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: import EC2 setup variables
+      include_vars: vars/vpc_setup
+
+    - name: import VPC setup variables
+      include_vars: vars/output_vars
+
+    - name: import EC2 setup variables
+      include_vars: vars/ec2_stack_setup
+
+    - name: create EC2 stack key
+      ec2_key:
+        name: ec2-stack-key
+        region: "{{region}}"
+      register: ec2-stack-key_out
+
+    - name: save private key into file ec2-login-key.pem
+      copy:
+        content: "{{ec2-stack-key_out.key.private_key}}"
+        dest: "./ec2-login-key.pem"
+        mode: 0600
+      when: ec2-stack-key_out.changed
