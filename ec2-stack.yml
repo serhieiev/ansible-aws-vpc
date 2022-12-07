@@ -37,3 +37,23 @@
           to_port: 80
           cidr_ip: 0.0.0.0/0
       register: ELB-SG_out
+
+    - name: create SG for EC2 stack
+      name: EC2-stack-SG
+      description: EC2 stack SG with rule descriptions
+      region: "{{region}}"
+      vpc_id: "{{vpcid}}"
+      purge_rules: no
+      rules:
+        - proto: tcp
+          from_port: 80
+          to_port: 80
+          cidr_ip: 0.0.0.0/0
+          group_id: "{{ELB-SG_out.group_id}}"
+
+        - proto: tcp
+          from_port: 22
+          to_port: 22
+          cidr_ip: 0.0.0.0/0
+          group_id: "{{BastionSGid}}"
+      register: EC2-stack-SG_out
