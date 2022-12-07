@@ -25,3 +25,15 @@
         dest: "./ec2-login-key.pem"
         mode: 0600
       when: ec2-stack-key_out.changed
+
+    - name: create SG for Load Balancer
+      name: ELB-SG
+      description: ELB SG with rule descriptions
+      region: "{{region}}"
+      vpc_id: "{{vpcid}}"
+      rules:
+        - proto: tcp
+          from_port: 80
+          to_port: 80
+          cidr_ip: 0.0.0.0/0
+      register: ELB-SG_out
